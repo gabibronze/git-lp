@@ -22,15 +22,15 @@ public class Anotacao {
     }
 
     public int getID(int ID){
-        return this.ID;
+        return ID;
     }
 
     public String getTexto(String texto){
-        return this.texto;
+        return texto;
     }
 
     public String setTexto(String texto){
-        return this.texto;
+        return texto;
     }
 
     public LocalDate getDataDeCriacao() {
