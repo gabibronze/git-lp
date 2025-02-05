@@ -5,18 +5,20 @@ import java.util.Objects;
 
 public class BlocoDeNotas {
     private ArrayList<Anotacao> blocoDeNotas;
-    private ArrayList<Anotacao> notasRecuperadasPorTexto;
-    private ArrayList<Anotacao> blocoDeNotasNaoDeletadas;
 
     public BlocoDeNotas() {
         this.blocoDeNotas = new ArrayList<Anotacao>();
-        this.notasRecuperadasPorTexto = new ArrayList<Anotacao>();
-        this.blocoDeNotasNaoDeletadas = new ArrayList<Anotacao>();
     }
 
     public Anotacao adicionarAnotacao(Anotacao nota) {
         blocoDeNotas.add(nota);
         return nota;
+    }
+
+    public Anotacao adicionarAnotacao(String texto){
+        Anotacao anotacaoParaAdicionar = new Anotacao(texto);
+        blocoDeNotas.add(anotacaoParaAdicionar);
+        return anotacaoParaAdicionar;
     }
 
     public Anotacao editarAnotacao(int ID, String texto) {
@@ -26,6 +28,7 @@ public class BlocoDeNotas {
     }
 
     public ArrayList recuperarPorTexto(String buscaStr) {
+        ArrayList<Anotacao> notasRecuperadasPorTexto = new ArrayList<>();
         for (int i = 0; i < blocoDeNotas.size(); i++) {
             Anotacao texto = blocoDeNotas.get(i);
             if (texto.contemTexto(buscaStr)) {
@@ -36,6 +39,7 @@ public class BlocoDeNotas {
     }
 
     public ArrayList<Anotacao> listar() {
+        ArrayList<Anotacao> blocoDeNotasNaoDeletadas = new ArrayList<Anotacao>();
         for (int i = 0; i < blocoDeNotas.size(); i++) {
             Anotacao nota = blocoDeNotas.get(i);
             if (!nota.isDeletado()) {
@@ -49,20 +53,16 @@ public class BlocoDeNotas {
     public String toString() {
         return "BlocoDeNotas{" +
                 "blocoDeNotas=" + blocoDeNotas +
-                ", notasRecuperadasPorTexto=" + notasRecuperadasPorTexto +
-                ", blocoDeNotasNaoDeletadas=" + blocoDeNotasNaoDeletadas +
                 '}';
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        BlocoDeNotas that = (BlocoDeNotas) o;
-        return Objects.equals(blocoDeNotas, that.blocoDeNotas) && Objects.equals(notasRecuperadasPorTexto, that.notasRecuperadasPorTexto) && Objects.equals(blocoDeNotasNaoDeletadas, that.blocoDeNotasNaoDeletadas);
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(blocoDeNotas, notasRecuperadasPorTexto, blocoDeNotasNaoDeletadas);
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }
