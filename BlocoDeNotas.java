@@ -1,7 +1,6 @@
 package aula03fevereiro;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class BlocoDeNotas {
     private ArrayList<Anotacao> blocoDeNotas;
@@ -21,13 +20,19 @@ public class BlocoDeNotas {
         return anotacaoParaAdicionar;
     }
 
-    public Anotacao editarAnotacao(int ID, String texto) {
+    public Anotacao editarAnotacao(int ID, String texto) throws Exception{
+        if (ID < 1) {
+            throw new Exception("A anotação " + ID + " não existe. Insira um número maior que 0.");
+        }
+        else if (ID > blocoDeNotas.size()) {
+            throw new Exception("A anotação " + ID + " não existe. Insira um número menor ou igual ao número de anotações criadas.");
+        }
         Anotacao nota = blocoDeNotas.get(ID);
         nota.setTexto(texto);
         return nota;
     }
 
-    public ArrayList recuperarPorTexto(String buscaStr) {
+    public ArrayList recuperarPorTexto(String buscaStr) throws Exception {
         ArrayList<Anotacao> notasRecuperadasPorTexto = new ArrayList<>();
         for (int i = 0; i < blocoDeNotas.size(); i++) {
             Anotacao texto = blocoDeNotas.get(i);
@@ -35,7 +40,22 @@ public class BlocoDeNotas {
                 notasRecuperadasPorTexto.add(texto);
             }
         }
+
         return notasRecuperadasPorTexto;
+    }
+
+    public Anotacao recuperarPorID(int ID) throws Exception {
+        if (ID < 1) {
+            throw new Exception("ID inválido. O ID deve ser maior que 0.");
+        }
+
+        for (Anotacao nota : blocoDeNotas) {
+            if (nota.getID() == ID) {
+                return nota; // Retorna a anotação se o ID corresponder
+            }
+        }
+
+        throw new Exception("Anotação com ID " + ID + " não encontrada.");
     }
 
     public ArrayList<Anotacao> listar() {
@@ -47,6 +67,21 @@ public class BlocoDeNotas {
             }
         }
         return blocoDeNotasNaoDeletadas;
+    }
+
+    public void deletarAnotacao(int ID) throws Exception {
+        if (ID < 1) {
+            throw new Exception("ID inválido. O ID deve ser maior que 0.");
+        }
+        for (int i = 0; i < blocoDeNotas.size(); i++) {
+            Anotacao nota = blocoDeNotas.get(i); //Obtém a anotação na posição i
+            if (nota.getID() == ID) {
+                nota.deleta(); //Marca a anotação como deletada
+                System.out.println("A anotação com ID " + ID + " foi deletada.");
+                return;
+            }
+        }
+        throw new Exception("Anotação com ID " + ID + " não encontrada.");
     }
 
     @Override
