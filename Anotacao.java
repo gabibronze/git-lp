@@ -17,19 +17,31 @@ public class Anotacao {
         this.deletado = false;
     }
 
-    public boolean contemTexto(String texto){
+    public boolean contemTexto(String texto) throws Exception {
+        if (this.deletado){
+            throw new Exception("A anotação foi deletada e não pode ser acessada");
+        }
         return this.texto.contains(texto);
     }
 
-    public int getID(int ID){
-        return ID;
+    public int getID() throws Exception {
+        if (this.deletado){
+            throw new Exception("A anotação foi deletada e não pode ser acessada.");
+        }
+        return this.ID;
     }
 
-    public String getTexto(String texto){
-        return texto;
+    public String getTexto() throws Exception {
+        if (this.deletado){
+            throw new Exception("A anotação foi deletada e não pode ser acessada.");
+        }
+        return this.texto;
     }
 
-    public String setTexto(String texto){
+    public String setTexto(String texto) throws Exception {
+        if (this.deletado){
+            throw new Exception("A anotação foi deletada e não pode ser acessada.");
+        }
         return texto;
     }
 
@@ -41,7 +53,10 @@ public class Anotacao {
         return this.deletado;
     }
 
-    public boolean deleta(){
+    public boolean deleta() throws Exception {
+        if (this.deletado){
+            throw new Exception("A anotação já foi deletada");
+        }
         return this.deletado = true;
     }
 
